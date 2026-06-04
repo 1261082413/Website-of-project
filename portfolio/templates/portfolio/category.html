@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.title }} | Haoyu Du</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a class="logo" href="{% url 'home' %}">
+                <span class="logo-mark">HD</span>
+                <span>Haoyu Du</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="https://github.com/1261082413" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="container">
+            <a class="back-link" href="{% url 'home' %}">
+                ← Back to Home
+            </a>
+
+            <div class="page-title-card">
+                <h1>{{ category.title }}</h1>
+                <p>{{ category.description }}</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-section">
+        <div class="container">
+
+            <div class="section-header">
+                <div class="section-label">Project List</div>
+                <h2 class="section-title">Projects in this category</h2>
+                <p class="section-description">
+                    Each project includes a short introduction, technology stack, GitHub repository,
+                    and a deeper design breakdown when available.
+                </p>
+            </div>
+
+            <div class="project-grid">
+                {% for project in category.projects %}
+                    <article class="project-card">
+
+                        <div class="card-meta">
+                            Selected Project
+                            {% if project.design %}
+                                <span class="design-badge">Design Breakdown</span>
+                            {% endif %}
+                        </div>
+
+                        <h2>{{ project.name }}</h2>
+
+                        <p>
+                            {{ project.description }}
+                        </p>
+
+                        <div class="tech-list">
+                            <span class="tech-pill">{{ project.tech }}</span>
+                        </div>
+
+                        <div class="project-actions">
+                            <a class="btn btn-primary" href="{% url 'project_detail' project.slug %}">
+                                View Details
+                            </a>
+
+                            {% if project.demo_slug %}
+                                <a class="btn btn-secondary" href="{% url 'game_demo' project.demo_slug %}">
+                                    Play Demo
+                                </a>
+                            {% endif %}
+                        </div>
+
+                    </article>
+                {% endfor %}
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span>© 2026 Haoyu Du. Project Website.</span>
+            <span>{{ category.title }}</span>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haoyu Du | Project Website</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a class="logo" href="{% url 'home' %}">
+                <span class="logo-mark">HD</span>
+                <span>Haoyu Du</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#profile">Profile</a>
+                <a href="#projects">Projects</a>
+                <a href="https://github.com/1261082413" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container hero-grid">
+
+            <div class="hero-card">
+                <div class="hero-badge">
+                    Project Website
+                </div>
+
+                <h1>
+                    Personal Profile &
+                    <span>Project Experience</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    I am Haoyu Du, a Computer Science student with experience in Django web development,
+                    game development, 3D modelling, data analysis, and human-computer interaction.
+                    This website introduces my personal background, technical skills, selected projects, and the design thinking behind my game and modelling work.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#projects">View Projects</a>
+                    <a class="btn btn-secondary" href="https://github.com/1261082413" target="_blank" rel="noopener noreferrer">
+                        Visit GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-side">
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">
+                        Main project categories covering games, modelling, and academic projects.
+                    </span>
+                </div>
+
+                <div class="stat-card light">
+                    <span class="stat-number">7+</span>
+                    <span class="stat-label">
+                        Portfolio projects involving programming, design, teamwork, and user experience.
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <section id="profile" class="page-section">
+            <div class="container">
+
+                <div class="section-header">
+                    <div class="section-label">About Me</div>
+                    <h2 class="section-title">Personal Profile</h2>
+                    <p class="section-description">
+                        My work combines software development, interactive design, and practical problem solving.
+                    </p>
+                </div>
+
+                <div class="profile-layout">
+
+                    <div class="panel">
+                        <p>
+                            I have experience in Python programming, Django web development, software engineering,
+                            game development, 3D modelling, data analysis, and human-computer interaction.
+                        </p>
+
+                        <p>
+                            Through my projects, I have practised backend development, interface design,
+                            project planning, team collaboration, and user-focused thinking. I enjoy building
+                            useful, clean, and understandable digital products.
+                        </p>
+
+                        <div class="skill-cloud">
+                            <span class="skill-pill">Python</span>
+                            <span class="skill-pill">Django</span>
+                            <span class="skill-pill">HTML</span>
+                            <span class="skill-pill">CSS</span>
+                            <span class="skill-pill">Game Development</span>
+                            <span class="skill-pill">3D Modelling</span>
+                            <span class="skill-pill">HCI</span>
+                            <span class="skill-pill">Software Engineering</span>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="timeline">
+
+                            <div class="timeline-item">
+                                <h3>Web Development</h3>
+                                <p>
+                                    Built Django-based web applications with routing, templates, database interaction,
+                                    and admin features.
+                                </p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <h3>Game and Interactive Projects</h3>
+                                <p>
+                                    Developed several game projects involving player control, level design,
+                                    enemy logic, and interactive systems.
+                                </p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <h3>Academic Projects</h3>
+                                <p>
+                                    Completed software engineering and human-centred security projects involving
+                                    design, implementation, evaluation, and teamwork.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects" class="page-section">
+            <div class="container">
+
+                <div class="section-header">
+                    <div class="section-label">Selected Work</div>
+                    <h2 class="section-title">Project Categories</h2>
+                    <p class="section-description">
+                        Explore my projects by category. Each section contains project summaries,
+                        technologies used, GitHub repository links, and design breakdowns for selected work.
+                    </p>
+                </div>
+
+                <div class="card-grid">
+                    {% for category in categories %}
+                        <div class="category-card">
+                            <div class="card-icon">
+                                {% if category.slug == "games" %}
+                                    🎮
+                                {% elif category.slug == "modeling" %}
+                                    🎸
+                                {% else %}
+                                    🎓
+                                {% endif %}
+                            </div>
+
+                            <div class="card-meta">
+                                Project Category
+                            </div>
+
+                            <h3>{{ category.name }}</h3>
+                            <p>{{ category.description }}</p>
+
+                            <a class="btn btn-primary" href="{% url 'category' category.slug %}">
+                                View Projects
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span>© 2026 Haoyu Du. Project Website.</span>
+            <span>Built with Django, HTML, and CSS.</span>
+        </div>
+    </footer>
+
+</body>
+</html>

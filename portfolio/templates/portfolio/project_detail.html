@@ -1,0 +1,230 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.name }} | Haoyu Du</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a class="logo" href="{% url 'home' %}">
+                <span class="logo-mark">HD</span>
+                <span>Haoyu Du</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{{ project.github }}" target="_blank" rel="noopener noreferrer">Repository</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-section">
+        <div class="container">
+
+            <a class="back-link" href="{% url 'home' %}">
+                ← Back to Home
+            </a>
+
+            <div class="detail-layout">
+
+                <article class="detail-card">
+
+                    <div class="section-label">Project Detail</div>
+
+                    <h1>{{ project.name }}</h1>
+
+                    <p>
+                        {{ project.description }}
+                    </p>
+
+                    <h2>Project Introduction</h2>
+
+                    <p>
+                        {{ project.detail }}
+                    </p>
+
+                    {% if project.design %}
+                        <div class="design-intro-card">
+                            <div class="section-label">Design Thinking</div>
+                            <h2>{{ project.design.subtitle }}</h2>
+                            <p>
+                                This section explains the design decisions behind the project, so interviewers can see not only the final result, but also how I think about gameplay, systems, balance, and implementation.
+                            </p>
+
+                            <div class="focus-list">
+                                {% for focus in project.design.focus %}
+                                    <span class="focus-pill">{{ focus }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <section class="design-block">
+                            <div class="section-label">Design Pillars</div>
+                            <div class="design-pillar-grid">
+                                {% for pillar in project.design.pillars %}
+                                    <div class="design-pillar">
+                                        <h3>{{ pillar.title }}</h3>
+                                        <p>{{ pillar.body }}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+
+                        <section class="design-block">
+                            <div class="section-label">Breakdown</div>
+                            <div class="design-section-list">
+                                {% for section in project.design.sections %}
+                                    <div class="design-section-item">
+                                        <h3>{{ section.title }}</h3>
+
+                                        {% for paragraph in section.paragraphs %}
+                                            <p>{{ paragraph }}</p>
+                                        {% endfor %}
+
+                                        {% if section.points %}
+                                            <ul class="design-point-list">
+                                                {% for point in section.points %}
+                                                    <li>{{ point }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+
+                        <section class="design-block">
+                            <div class="section-label">Interview Takeaways</div>
+                            <div class="takeaway-grid">
+                                {% for takeaway in project.design.takeaways %}
+                                    <div class="takeaway-card">
+                                        {{ takeaway }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+
+                        {% if project.design.deck %}
+                            <section class="design-block">
+                                <div class="design-deck-header">
+                                    <div>
+                                        <div class="section-label">Visual Design Deck</div>
+                                        <h2>{{ project.design.deck.label }}</h2>
+                                        <p>
+                                            These slides are converted into web images so the design process can be viewed directly on the project page.
+                                        </p>
+                                    </div>
+
+                                    <a class="btn btn-secondary" href="{% static project.design.deck.pdf %}" target="_blank" rel="noopener noreferrer">
+                                        Open Original PDF
+                                    </a>
+                                </div>
+
+                                <div class="deck-gallery">
+                                    {% for slide in project.design.deck.images %}
+                                        <figure class="deck-slide">
+                                            <img src="{% static slide.src %}" alt="{{ slide.alt }}">
+                                            <figcaption>{{ slide.caption }}</figcaption>
+                                        </figure>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% else %}
+                        <h2>What this project shows</h2>
+
+                        <p>
+                            This project demonstrates my practical skills in programming, problem solving,
+                            interface design, project development, and technical learning. It is included
+                            in my project website to show my ability to turn ideas into working digital products.
+                        </p>
+                    {% endif %}
+
+                    <div class="project-actions detail-actions">
+                        <a class="btn btn-dark" href="{{ project.github }}" target="_blank" rel="noopener noreferrer">
+                            View GitHub Repository
+                        </a>
+
+                        {% if project.demo_slug %}
+                            <a class="btn btn-primary" href="{% url 'game_demo' project.demo_slug %}">
+                                Play Demo
+                            </a>
+                        {% endif %}
+                    </div>
+
+                </article>
+
+                <aside class="detail-summary">
+
+                    <h3>Project Summary</h3>
+
+                    <div class="summary-row">
+                        <span class="summary-label">Project Name</span>
+                        <span class="summary-value">{{ project.name }}</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span class="summary-label">Technology Used</span>
+                        <span class="summary-value">{{ project.tech }}</span>
+                    </div>
+
+                    {% if project.design.role %}
+                        <div class="summary-row">
+                            <span class="summary-label">My Role</span>
+                            <span class="summary-value">{{ project.design.role }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% if project.design.type %}
+                        <div class="summary-row">
+                            <span class="summary-label">Project Type</span>
+                            <span class="summary-value">{{ project.design.type }}</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="summary-row">
+                        <span class="summary-label">Repository</span>
+                        <span class="summary-value">Available on GitHub</span>
+                    </div>
+
+                    {% if project.demo_slug %}
+                        <div class="summary-row">
+                            <span class="summary-label">Playable Demo</span>
+                            <span class="summary-value">Available on this website</span>
+                        </div>
+                    {% endif %}
+
+                    {% if project.design.focus %}
+                        <div class="summary-row">
+                            <span class="summary-label">Design Focus</span>
+                            <div class="summary-pill-list">
+                                {% for focus in project.design.focus %}
+                                    <span>{{ focus }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </aside>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <span>© 2026 Haoyu Du. Project Website.</span>
+            <span>{{ project.name }}</span>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ demo.title }} | Haoyu Du</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a class="logo" href="{% url 'home' %}">
+                <span class="logo-mark">HD</span>
+                <span>Haoyu Du</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'category' 'games' %}">Game Projects</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-section">
+        <div class="container">
+
+            <a class="back-link" href="{% url 'category' 'games' %}">
+                ← Back to Game Projects
+            </a>
+
+            <div class="game-shell">
+
+                <div class="game-info">
+                    <div>
+                        <div class="section-label">Playable Demo</div>
+                        <h1>{{ demo.title }}</h1>
+                        <p>{{ demo.subtitle }}</p>
+                    </div>
+
+                    <div class="game-controls">
+                        <h3>Controls</h3>
+                        <ul>
+                            {% for control in demo.controls %}
+                                <li>{{ control }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <button class="btn btn-primary" onclick="restartGame()">
+                            Restart Demo
+                        </button>
+                    </div>
+                </div>
+
+                <canvas id="gameCanvas" width="960" height="540"></canvas>
+
+                <p class="demo-note">
+                    This is a simplified browser demo created for quick portfolio presentation.
+                    The full project source code is linked on the project detail page.
+                </p>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script src="{% static demo.script %}"></script>
+
+</body>
+</html>
